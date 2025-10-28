@@ -10,6 +10,7 @@ class AnimatedColorPalette extends StatefulWidget {
 
 class _AnimatedColorPaletteState extends State<AnimatedColorPalette> {
   List<Color> currentPalette = generateRandomPalette();
+  bool isClicked = false;
 
   static List<Color> generateRandomPalette() {
     final random = Random();
@@ -25,6 +26,7 @@ class _AnimatedColorPaletteState extends State<AnimatedColorPalette> {
   }
 
   void regeneratePalette() {
+    isClicked = !isClicked;
     setState(() {
       currentPalette = generateRandomPalette();
     });
@@ -41,8 +43,10 @@ class _AnimatedColorPaletteState extends State<AnimatedColorPalette> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             for (Color color in currentPalette)
-              Container(
-                width: 100,
+              AnimatedContainer(
+                curve: Curves.elasticInOut,
+                duration: Duration(milliseconds: 300),
+                width: isClicked ? 200 : 100,
                 height: 100,
                 color: color,
                 margin: const EdgeInsets.all(8),
